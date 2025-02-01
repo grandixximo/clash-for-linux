@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# 关闭clash服务
+# Stop the Clash service
 PID_NUM=`ps -ef | grep [c]lash-linux-a | wc -l`
 PID=`ps -ef | grep [c]lash-linux-a | awk '{print $2}'`
 if [ $PID_NUM -ne 0 ]; then
@@ -8,7 +8,7 @@ if [ $PID_NUM -ne 0 ]; then
 	# ps -ef | grep [c]lash-linux-a | awk '{print $2}' | xargs kill -9
 fi
 
-# 清除环境变量
+# Clear environment variables
 > /etc/profile.d/clash.sh
 
-echo -e "\n服务关闭成功，请执行以下命令关闭系统代理：proxy_off\n"
+echo -e "\nService stopped successfully. Please run the following command to disable the system proxy: proxy_off\n"

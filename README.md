@@ -1,81 +1,81 @@
 [TOC]
 
-# 项目介绍
+# Project Introduction
 
-此项目是通过使用开源项目[clash](https://github.com/Dreamacro/clash)作为核心程序，再结合脚本实现简单的代理功能。
+This project uses the open-source project [Clash](https://github.com/Dreamacro/clash) as the core program, combined with scripts to implement a simple proxy function.
 
-主要是为了解决我们在服务器上下载GitHub等一些国外资源速度慢的问题。
-
-<br>
-
-# 使用须知
-
-- 运行本项目建议使用root用户，或者使用 sudo 提权。
-- 使用过程中如遇到问题，请优先查已有的 [issues](https://github.com/wanhebin/clash-for-linux/issues)。
-- 在进行issues提交前，请替换提交内容中是敏感信息（例如：订阅地址）。
-- 本项目是基于 [clash](https://github.com/Dreamacro/clash) 、[yacd](https://github.com/haishanh/yacd) 进行的配置整合，关于clash、yacd的详细配置请去原项目查看。
-- 此项目不提供任何订阅信息，请自行准备Clash订阅地址。
-- 运行前请手动更改`.env`文件中的`CLASH_URL`变量值，否则无法正常运行。
-- 当前在RHEL系列和Debian系列Linux系统中测试过，其他系列可能需要适当修改脚本。
-- 支持 x86_64/aarch64 平台
-
-> **注意**：当你在使用此项目时，遇到任何无法独自解决的问题请优先前往 [Issues](https://github.com/wanhebin/clash-for-linux/issues) 寻找解决方法。由于空闲时间有限，后续将不再对Issues中 “已经解答”、“已有解决方案” 的问题进行重复性的回答。
+The main goal is to solve the problem of slow download speeds for resources such as GitHub on servers.
 
 <br>
 
-# 使用教程
+# Usage Notes
 
-## 下载项目
+- It is recommended to run this project as the root user or use `sudo` for elevated privileges.
+- If you encounter any issues while using this project, please first check the existing [issues](https://github.com/wanhebin/clash-for-linux/issues).
+- Before submitting an issue, please remove any sensitive information (such as subscription URLs) from your submission.
+- This project is based on the configurations of [Clash](https://github.com/Dreamacro/clash) and [yacd](https://github.com/haishanh/yacd). For detailed configuration instructions, please refer to the original projects.
+- This project does not provide any subscription information. You must prepare your own Clash subscription URL.
+- Before running, please manually modify the `.env` file and update the `CLASH_URL` variable; otherwise, the script will not work properly.
+- This project has been tested on RHEL-based and Debian-based Linux distributions. Other distributions may require script modifications.
+- Supports x86_64/aarch64 platforms.
 
-下载项目
+> **Note**: If you encounter any issues while using this project, please check the [Issues](https://github.com/wanhebin/clash-for-linux/issues) section first for solutions. Due to limited free time, repeated questions that have already been answered or have existing solutions will not be responded to.
+
+<br>
+
+# User Guide
+
+## Download the Project
+
+Download the project:
 
 ```bash
 $ git clone https://github.com/wanhebin/clash-for-linux.git
 ```
 
-进入到项目目录，编辑`.env`文件，修改变量`CLASH_URL`的值。
+Enter the project directory and edit the `.env` file to modify the `CLASH_URL` variable.
 
 ```bash
 $ cd clash-for-linux
 $ vim .env
 ```
 
-> **注意：** `.env` 文件中的变量 `CLASH_SECRET` 为自定义 Clash Secret，值为空时，脚本将自动生成随机字符串。
+> **Note:** The variable `CLASH_SECRET` in the `.env` file is used to set a custom Clash secret. If left empty, the script will automatically generate a random string.
 
 <br>
 
-## 启动程序
+## Start the Program
 
-直接运行脚本文件`start.sh`
+Run the `start.sh` script:
 
-- 进入项目目录
+- Navigate to the project directory:
 
 ```bash
 $ cd clash-for-linux
 ```
 
-- 运行启动脚本
+- Run the startup script:
 
 ```bash
 $ sudo bash start.sh
 
-正在检测订阅地址...
-Clash订阅地址可访问！                                      [  OK  ]
+Checking subscription address...
+Clash subscription address is accessible!                          [  OK  ]
 
-正在下载Clash配置文件...
-配置文件config.yaml下载成功！                              [  OK  ]
+Downloading Clash configuration file...
+Configuration file config.yaml downloaded successfully!            [  OK  ]
 
-正在启动Clash服务...
-服务启动成功！                                             [  OK  ]
+Starting Clash service...
+Service started successfully!                                      [  OK  ]
 
-Clash Dashboard 访问地址：http://<ip>:9090/ui
-Secret：xxxxxxxxxxxxx
+Clash Dashboard access address: http://<ip>:9090/ui
+Secret: xxxxxxxxxxxxx
 
-请执行以下命令加载环境变量: source /etc/profile.d/clash.sh
+Please run the following command to load environment variables: source /etc/profile.d/clash.sh
 
-请执行以下命令开启系统代理: proxy_on
+Please run the following command to enable the system proxy: proxy_on
 
-若要临时关闭系统代理，请执行: proxy_off
+To temporarily disable the system proxy, run: proxy_off
 
 ```
 
@@ -84,7 +84,7 @@ $ source /etc/profile.d/clash.sh
 $ proxy_on
 ```
 
-- 检查服务端口
+- Check service ports:
 
 ```bash
 $ netstat -tln | grep -E '9090|789.'
@@ -94,7 +94,7 @@ tcp6       0      0 :::7891                 :::*                    LISTEN
 tcp6       0      0 :::7892                 :::*                    LISTEN
 ```
 
-- 检查环境变量
+- Check environment variables:
 
 ```bash
 $ env | grep -E 'http_proxy|https_proxy'
@@ -102,33 +102,33 @@ http_proxy=http://127.0.0.1:7890
 https_proxy=http://127.0.0.1:7890
 ```
 
-以上步鄹如果正常，说明服务clash程序启动成功，现在就可以体验高速下载github资源了。
+If all steps complete successfully, the Clash service has been successfully started, and you can now experience high-speed downloads of GitHub resources.
 
 <br>
 
-## 重启程序
+## Restart the Program
 
-如果需要对Clash配置进行修改，请修改 `conf/config.yaml` 文件。然后运行 `restart.sh` 脚本进行重启。
+If you need to modify the Clash configuration, update the `conf/config.yaml` file and then restart the service using the `restart.sh` script.
 
-> **注意：**
-> 重启脚本 `restart.sh` 不会更新订阅信息。
+> **Note:**  
+> The `restart.sh` script does not update subscription information.
 
 <br>
 
-## 停止程序
+## Stop the Program
 
-- 进入项目目录
+- Navigate to the project directory:
 
 ```bash
 $ cd clash-for-linux
 ```
 
-- 关闭服务
+- Stop the service:
 
 ```bash
 $ sudo bash shutdown.sh
 
-服务关闭成功，请执行以下命令关闭系统代理：proxy_off
+Service stopped successfully. Please run the following command to disable the system proxy: proxy_off
 
 ```
 
@@ -136,36 +136,41 @@ $ sudo bash shutdown.sh
 $ proxy_off
 ```
 
-然后检查程序端口、进程以及环境变量`http_proxy|https_proxy`，若都没则说明服务正常关闭。
-
+Then, check the program ports, running processes, and environment variables (`http_proxy|https_proxy`). If they are no longer present, the service has been successfully stopped.
 
 <br>
 
 ## Clash Dashboard
 
-- 访问 Clash Dashboard
+- **Access Clash Dashboard**
 
-通过浏览器访问 `start.sh` 执行成功后输出的地址，例如：http://192.168.0.1:9090/ui
+Open a web browser and enter the address displayed after running `start.sh`, for example:  
+`http://192.168.0.1:9090/ui`
 
-- 登录管理界面
+- **Login to the Management Interface**
 
-在`API Base URL`一栏中输入：http://\<ip\>:9090 ，在`Secret(optional)`一栏中输入启动成功后输出的Secret。
+Enter the following in the `API Base URL` field:  
+`http://<ip>:9090`  
 
-点击Add并选择刚刚输入的管理界面地址，之后便可在浏览器上进行一些配置。
+In the `Secret (optional)` field, enter the Secret displayed after startup.
 
-- 更多教程
+Click "Add" and select the newly added management interface address. You can now configure Clash through the browser.
 
-此 Clash Dashboard 使用的是[yacd](https://github.com/haishanh/yacd)项目，详细使用方法请移步到yacd上查询。
+- **More Tutorials**
 
+This Clash Dashboard is based on the [yacd](https://github.com/haishanh/yacd) project. For detailed usage instructions, please refer to the yacd documentation.
 
 <br>
 
-# 常见问题
+# Frequently Asked Questions
 
-1. 部分Linux系统默认的 shell `/bin/sh` 被更改为 `dash`，运行脚本会出现报错（报错内容一般会有 `-en [ OK ]`）。建议使用 `bash xxx.sh` 运行脚本。
+1. **Script error due to shell differences:**  
+   Some Linux distributions have `/bin/sh` set to `dash` instead of `bash`, which can cause errors (e.g., `-en [ OK ]`). It is recommended to run scripts using `bash xxx.sh`.
 
-2. 部分用户在UI界面找不到代理节点，基本上是因为厂商提供的clash配置文件是经过base64编码的，且配置文件格式不符合clash配置标准。
+2. **Proxy nodes not appearing in the UI:**  
+   If you cannot find proxy nodes in the UI, the issue is likely due to the provider encoding the Clash configuration file in Base64, or the file format not conforming to Clash standards.
 
-   目前此项目已集成自动识别和转换clash配置文件的功能。如果依然无法使用，则需要通过自建或者第三方平台（不推荐，有泄露风险）对订阅地址转换。
-   
-3. 程序日志中出现`error: unsupported rule type RULE-SET`报错，解决方法查看官方[WIKI](https://github.com/Dreamacro/clash/wiki/FAQ#error-unsupported-rule-type-rule-set)
+   This project includes automatic detection and conversion for Clash configuration files. If the issue persists, you may need to manually convert the subscription URL via a self-hosted or third-party platform (not recommended due to potential privacy risks).
+
+3. **`error: unsupported rule type RULE-SET` appears in logs:**  
+   This error is explained in the official [WIKI](https://github.com/Dreamacro/clash/wiki/FAQ#error-unsupported-rule-type-rule-set). Please check the documentation for solutions.
